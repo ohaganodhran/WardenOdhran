@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>WardenOdhran</title>
+    <link rel="icon" type="image/x-icon" href="/Assets/favicon.ico">
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const showSignup = /*[[${showSignup}]]*/ false;
+        /*]]>*/
+    </script>
+
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <script src="/js/login.js" defer></script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="body">
+        <img class="logo" src="../Assets/logo.png">
+
+        <div id="tabs">
+            <button id="loginTab" class="tab active">Login</button>
+            <button id="signupTab" class="tab">Sign Up</button>
+        </div>
+
+        <form id="loginForm" class="form active" th:object="${creds}" th:action="@{/login}" method="post">
+            <p class="error-message" th:if="${loginError}" th:text="${loginError}"></p>
+            <input type="text" th:field="*{username}" placeholder="Username" required>
+            <input type="password" th:field="*{password}" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
+
+        <form id="signupForm" class="form hidden"
+              th:object="${user}"
+              th:action="@{/signup}" method="post" novalidate>
+
+            <input type="text"
+                   th:field="*{username}"
+                   th:classappend="${#fields.hasErrors('username')} ? 'error' : ''"
+                   placeholder="Username" required>
+            <p class="error-message"
+               th:if="${user != null} and ${#fields.hasErrors('username')}"
+               th:errors="*{username}"></p>
+
+            <input type="email"
+                   th:field="*{email}"
+                   th:classappend="${#fields.hasErrors('email')} ? 'error' : ''"
+                   placeholder="Email" required>
+            <p class="error-message"
+               th:if="${user != null} and ${#fields.hasErrors('email')}"
+               th:errors="*{email}"></p>
+
+            <input type="password"
+                   th:field="*{password}"
+                   th:classappend="${#fields.hasErrors('password')} ? 'error' : ''"
+                   placeholder="Password" required>
+            <p class="error-message"
+               th:if="${user != null} and ${#fields.hasErrors('password')}"
+               th:errors="*{password}"></p>
+
+            <input type="password"
+                   th:field="*{confirmPassword}"
+                   th:classappend="${#fields.hasErrors('confirmPassword')} ? 'error' : ''"
+                   placeholder="Confirm Password" required>
+            <p class="error-message"
+               th:if="${user != null} and ${#fields.hasErrors('confirmPassword')}"
+               th:errors="*{confirmPassword}"></p>
+
+            <input type="submit" value="Sign Up">
+        </form>
+
+        <div id="additional">
+            <a th:href="@{/forgotpassword}" class="buttonLink" id="forgotPassword"> Forgot Password</a>
+        </div>
+    </div>
+</div>
+</body>
+
+<div id="toast" th:if="${signupSuccess}" class="toast">User Created Successfully!</div>
+</html>
