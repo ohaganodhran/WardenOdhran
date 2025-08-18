@@ -1,16 +1,11 @@
 package com.warden.service;
 
 import com.warden.controller.CredentialDTO;
-import com.warden.controller.UserDTO;
 import com.warden.dao.CredentialDao;
 import com.warden.entity.Credential;
-import com.warden.entity.User;
 import com.warden.util.EncryptionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,9 +31,9 @@ public class CredentialService {
     }
 
     public void saveCredential(CredentialDTO credentialDTO) {
-        Credential credential1 = mapToEntity(credentialDTO);
-        credentialDao.save(credential1);
-        log.info("Credential created under user {}", credential1.getUsername());
+        Credential credential = mapToEntity(credentialDTO);
+        credentialDao.save(credential);
+        log.info("Credential created under user {}", credential.getUsername());
     }
 
     public void deleteCredential(Long id) {
