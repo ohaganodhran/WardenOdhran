@@ -42,7 +42,7 @@ public class CredentialController {
     }
 
     @PostMapping("/credential/add")
-    public String addCredential(@ModelAttribute("newCredential") Credential credential, HttpSession session) {
+    public String addCredential(@ModelAttribute("newCredential") CredentialDTO credential, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return "redirect:/";
