@@ -28,7 +28,7 @@ public class CredentialController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session, Model model) {
+    public String dashboard(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("user");
         if (currentUser == null) {
             return "redirect:/";
@@ -55,8 +55,7 @@ public class CredentialController {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+    public String logout(HttpSession session) {
         if (session != null) {
             session.invalidate();
         }

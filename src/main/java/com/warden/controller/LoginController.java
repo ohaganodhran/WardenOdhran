@@ -34,7 +34,12 @@ public class LoginController {
     }
 
     @GetMapping()
-    public String onLoad(Model model) {
+    public String onLoad(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("user");
+        if (currentUser != null) {
+            return "redirect:/dashboard";
+        }
+
         model.addAttribute("creds", new Identity());
         model.addAttribute("user", new UserDTO());
         return "index";
