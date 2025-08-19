@@ -1,10 +1,10 @@
 function toggleCard(headerElement) {
     const card = headerElement.closest(".credential-card");
+
     const isOpen = card.classList.toggle("open");
-
     const arrow = headerElement.querySelector(".arrow");
-    arrow.classList.toggle("rotated");
 
+    arrow.classList.toggle("rotated");
     if(!isOpen) {
         const passwordInput = card.querySelector('.password-input');
         const eyeToggle = card.querySelector('.eye-toggle');
@@ -12,11 +12,27 @@ function toggleCard(headerElement) {
         eyeToggle.src = '/Assets/eye.png';
         eyeToggle.style.transform = 'scale(1) rotateY(0deg)';
     }
+
 }
 
 function toggleModal() {
     const modal = document.getElementById('credentialModal');
     modal.classList.toggle('hidden');
+
+}
+
+function search() {
+    const searchInput = document.getElementById("search");
+    const cards = document.querySelectorAll('.credential-card');
+
+    const query = searchInput.value.toLowerCase();
+
+    cards.forEach(card => {
+        const siteNameElement = card.querySelector('.site-name');
+        const siteNameText = siteNameElement ? siteNameElement.textContent.toLowerCase() : "";
+
+        card.style.display = siteNameText.includes(query) ? "" : "none";
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -52,4 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 200);
         });
     });
+
+    document.getElementById("search").addEventListener('input', search);
 });
