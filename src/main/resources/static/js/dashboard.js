@@ -15,10 +15,8 @@ function toggleCard(headerElement) {
 
 }
 
-function toggleModal() {
-    const modal = document.getElementById('credentialModal');
-    modal.classList.toggle('hidden');
-
+function toggleModal(modal) {
+    document.getElementById(modal).classList.toggle("hidden");
 }
 
 function search() {
@@ -36,14 +34,18 @@ function search() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const addBtn = document.getElementById('addCredentialBtn');
-    const closeBtn = document.querySelector('.close-btn');
+    const addCredBtn = document.getElementById('addCredentialBtn');
+    const closeCredBtn = document.getElementById('closeAddBtn');
 
-    if(closeBtn) {
-        closeBtn.addEventListener('click', toggleModal)
+    if (addCredBtn) {
+
+        addCredBtn.addEventListener('click', () => toggleModal("credentialModal"));
     }
 
-    addBtn.addEventListener('click', toggleModal);
+    if (closeCredBtn) {
+
+        closeCredBtn.addEventListener('click', () => toggleModal("credentialModal"));
+    }
 
     document.querySelectorAll('.credential-header').forEach(header => {
         header.addEventListener('click', () => toggleCard(header));
@@ -66,6 +68,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 eye.style.transform = 'scale(1) rotateY(0deg)';
             }, 200);
+        });
+    });
+
+    document.querySelectorAll('.eyeForAddCred').forEach(eye => {
+        eye.addEventListener('click', () => {
+            const input = eye.closest('.password-field-add').querySelector('.password-input-add');
+            if(!input) return;
+
+            eye.style.transform = 'scale(0) rotateY(90deg)';
+
+            setTimeout(() => {
+                if(input.type === 'password') {
+                    input.type = 'text';
+                    eye.src = '/Assets/hide.png';
+                } else {
+                    input.type = 'password';
+                    eye.src = 'Assets/eye.png';
+                }
+                eye.style.transform = 'scale(1) rotateY(0deg)';
+            }, 200);
+        });
+    });
+
+
+
+    document.querySelectorAll('.deleteCredential').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.credential-card');
+            const siteName = card.querySelector('.site-name').textContent;
+            const credentialId = card.dataset.id; // assuming you store the id in a data attribute on the card
+
+            const template = document.getElementById('deleteModal');
+            const modal = template.cloneNode(true);
+            modal.id = '';
+            modal.classList.remove('hidden');
+
+            modal.querySelector('.deleteSiteName').textContent = siteName;
+
+            modal.querySelector('.deleteCredentialId').value = credentialId;
+
+            modal.querySelector('.close-delete-cred-btn').addEventListener('click', () => {
+                modal.remove();
+            });
+
+            document.body.appendChild(modal);
         });
     });
 

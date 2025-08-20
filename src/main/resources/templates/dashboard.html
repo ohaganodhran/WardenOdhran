@@ -26,13 +26,18 @@
                 Nothing to see here...
             </div>
 
-            <div th:each="cred : ${credentials}" class="credential-card">
+            <div th:each="cred : ${credentials}" class="credential-card" th:attr="data-id=${cred.id}">
                 <div class="credential-header">
                     <span class="site-name" th:text="${cred.siteName}">Site Name</span>
                     <span class="arrow">&#9666;</span>
                 </div>
 
                 <div class="credential-details">
+                    <div class="credential-CRUD-header">
+                        <img class="editCredential" src="/Assets/cogwheel.png"/>
+                        <img class="deleteCredential" src="/Assets/trash.png"/>
+                    </div>
+
                     <div class="field">
                         <label>Username:</label>
                         <span class="value" th:text="${cred.username}">username</span>
@@ -54,9 +59,13 @@
     </div>
 </div>
 
+                                                                <!--//////////////////////////////////////////////////////////-->
+                                                                <!--////////////////////ADD NEW CREDENTIAL////////////////////-->
+                                                                <!--//////////////////////////////////////////////////////////-->
+
 <div id="credentialModal" class="modal hidden">
     <div class="modal-content">
-        <span class="close-btn">&times;</span>
+        <span class="close-btn" id="closeAddBtn">&times;</span>
         <h2>Add New Credential</h2>
 
         <form th:action="@{/credential/add}" method="post" th:object="${newCredential}">
@@ -72,7 +81,10 @@
 
             <div class="form-group">
                 <label for="sitePasswordHash">Password</label>
-                <input type="password" id="sitePasswordHash" th:field="*{passwordHash}" required />
+                <div class="password-field-add">
+                    <input type="password" id="sitePasswordHash" class="value password-input-add" th:field="*{passwordHash}" required />
+                    <img class="eyeForAddCred" src="/Assets/eye.png"/>
+                </div>
             </div>
 
             <div class="form-group">
@@ -86,5 +98,30 @@
 </div>
 
 <button id="addCredentialBtn">+</button>
+
+
+                                                            <!--//////////////////////////////////////////////////////////-->
+                                                            <!--///////////////////DELETE A CREDENTIAL////////////////////-->
+                                                            <!--//////////////////////////////////////////////////////////-->
+
+<div id="deleteModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn close-delete-cred-btn">&times;</span>
+        <h2>Delete Credential</h2>
+        <form th:action="@{/credential/delete}" method="post"
+              style="display: flex; flex-direction: column;
+                gap: 0.5rem; text-align: center;">
+
+            <h3>Are you sure you want to delete the credential for <span class="deleteSiteName"></span>?</h3>
+
+            <input type="hidden" name="id" class="deleteCredentialId" />
+
+            <button type="submit" class="submit-btn">Delete</button>
+        </form>
+    </div>
+</div>
+
 </body>
+
+<div id="toast" th:if="${param.deletionSuccess != null}" class="toast">Credential Deleted Successfully</div>
 </html>
