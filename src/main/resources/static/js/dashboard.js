@@ -33,7 +33,7 @@ function search() {
     });
 }
 
-export function toggleEye(eye, passwordField, passwordInput) {
+function toggleEye(eye, passwordField, passwordInput) {
     const input = eye.closest(passwordField).querySelector(passwordInput);
     if(!input) return;
 
