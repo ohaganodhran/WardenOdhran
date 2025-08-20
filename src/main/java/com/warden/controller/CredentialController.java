@@ -40,6 +40,7 @@ public class CredentialController {
         model.addAttribute("credentials", credentials);
         model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("newCredential", new Credential());
+        model.addAttribute("credentialToEdit", new Credential());
 
         return "dashboard";
     }
@@ -57,8 +58,24 @@ public class CredentialController {
         return "redirect:/dashboard";
     }
 
+    @PostMapping("/credential/edit")
+    public String editCredential(@ModelAttribute("credentialToEdit") CredentialDTO credential, @RequestParam("id") Long id, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/";
+        }
+
+        credentialService.updateCredential(id, credential);
+
+        return "redirect:/dashboard?editSuccess=true";
+    }
+
     @PostMapping ("/credential/delete")
-    public String deleteCredential(@RequestParam("id") Long id) {
+    public String deleteCredential(@RequestParam("id") Long id, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/";
+        }
         credentialService.deleteCredential(id);
 
         return "redirect:/dashboard?deletionSuccess=true";

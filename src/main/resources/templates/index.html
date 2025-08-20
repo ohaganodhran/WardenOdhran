@@ -27,7 +27,7 @@
         <form id="loginForm" class="form active" th:object="${creds}" th:action="@{/login}" method="post">
             <p class="error-message" th:if="${loginError}" th:text="${loginError}"></p>
             <input type="text" th:field="*{username}" placeholder="Username" required>
-            <input type="password" th:field="*{password}" placeholder="Password" required>
+            <input type="password" id="password" th:field="*{password}" placeholder="Password" required>
             <input type="submit" value="Login">
         </form>
 
