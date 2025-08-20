@@ -331,7 +331,8 @@ header {
     backface-visibility: hidden;
 }
 
-.eyeForAddCred {
+.eyeForAddCred,
+.eyeForEditCred {
     cursor: pointer;
     width: 35px;
     height: 35px;

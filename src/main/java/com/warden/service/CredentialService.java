@@ -37,11 +37,24 @@ public class CredentialService {
     public void saveCredential(CredentialDTO credentialDTO) {
         Credential credential = mapToEntity(credentialDTO);
         credentialDao.save(credential);
-        log.info("Credential created under user {}", credential.getUsername());
+        log.info("Credential created under user {}", credential.getUser().getUsername());
+    }
+
+    public void updateCredential(Long id, CredentialDTO newCredentialDTO) {
+        Credential existingCredential = credentialDao.findById(id).orElseThrow(() -> new RuntimeException("Credential not found with id " + id));
+
+        existingCredential.setSiteName(newCredentialDTO.getSiteName());
+        existingCredential.setUsername(newCredentialDTO.getUsername());
+        existingCredential.setPasswordHash(encryptionUtil.encrypt(newCredentialDTO.getPasswordHash()));
+        existingCredential.setNotes(newCredentialDTO.getNotes());
+
+        credentialDao.save(existingCredential);
+        log.info("Credential updated under user {}", existingCredential.getUser().getUsername());
+
     }
 
     public void deleteCredential(Long id) {
-        credentialDao.findById(id).ifPresent(credential -> log.info("Credential deleted under user {}", credential.getUsername()));
+        credentialDao.findById(id).ifPresent(credential -> log.info("Credential deleted under user {}", credential.getUser().getUsername()));
         credentialDao.deleteById(id);
     }
 

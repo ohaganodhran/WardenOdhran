@@ -40,7 +40,7 @@
 
                     <div class="field">
                         <label>Username:</label>
-                        <span class="value" th:text="${cred.username}">username</span>
+                        <span class="value username" th:text="${cred.username}">username</span>
                     </div>
                     <div class="field password-field">
                         <label>Password:</label>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="field">
                         <label>Notes:</label>
-                        <span class="value" th:text="${cred.notes}">No notes.</span>
+                        <span class="value notes" th:text="${cred.notes}">No notes.</span>
                     </div>
                 </div>
             </div>
@@ -114,14 +114,57 @@
 
             <h3>Are you sure you want to delete the credential for <span class="deleteSiteName"></span>?</h3>
 
-            <input type="hidden" name="id" class="deleteCredentialId" />
+            <input type="hidden" name="id" class="deleteCredentialId"/>
 
             <button type="submit" class="submit-btn">Delete</button>
         </form>
     </div>
 </div>
 
+                                                            <!--//////////////////////////////////////////////////////////-->
+                                                            <!--/////////////////////EDIT A CREDENTIAL////////////////////-->
+                                                            <!--//////////////////////////////////////////////////////////-->
+
+
+<div id="credentialEditModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn closeEditBtn">&times;</span>
+        <h2>Edit Credential</h2>
+
+        <form th:action="@{/credential/edit}" method="post" th:object="${credentialToEdit}">
+            <div class="form-group">
+                <label for="siteNameToEdit">Site Name</label>
+                <input type="text" id="siteNameToEdit" class="siteNameToEdit" th:field="*{siteName}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="siteUsernameToEdit">Username</label>
+                <input type="text" id="siteUsernameToEdit" class="usernameToEdit" th:field="*{username}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="sitePasswordHashToEdit">Password</label>
+                <div class="password-field-edit">
+                    <input type="password" id="sitePasswordHashToEdit" class="value password-input-edit" th:field="*{passwordHash}" required />
+                    <img class="eyeForEditCred" src="/Assets/eye.png"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="notesToEdit">Notes</label>
+                <textarea id="notesToEdit" class="notesToEdit" th:field="*{notes}" rows="3"></textarea>
+            </div>
+
+            <input type="hidden" name="id" class="editCredentialId"/>
+
+            <button type="submit" class="submit-btn">Edit</button>
+        </form>
+    </div>
+</div>
+
 </body>
 
-<div id="toast" th:if="${param.deletionSuccess != null}" class="toast">Credential Deleted Successfully</div>
+<div th:if="${param.deletionSuccess != null}" class="toast">Credential Deleted Successfully</div>
+<div th:if="${param.editSuccess != null}" class="toast">Credential Edited Successfully</div>
+
 </html>
