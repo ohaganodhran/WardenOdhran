@@ -30,6 +30,10 @@ public class CredentialService {
         return credentials;
     }
 
+    public Credential findById(Long id) {
+        return credentialDao.findById(id).orElse(null);
+    }
+
     public void saveCredential(CredentialDTO credentialDTO) {
         Credential credential = mapToEntity(credentialDTO);
         credentialDao.save(credential);
@@ -37,6 +41,7 @@ public class CredentialService {
     }
 
     public void deleteCredential(Long id) {
+        credentialDao.findById(id).ifPresent(credential -> log.info("Credential deleted under user {}", credential.getUsername()));
         credentialDao.deleteById(id);
     }
 

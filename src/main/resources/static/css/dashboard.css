@@ -144,7 +144,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 2000;
 }
 
 .modal.hidden {
@@ -152,6 +152,7 @@ header {
 }
 
 .modal-content {
+    z-index: 2100;
     background-color: #050665;
     padding: 2rem;
     border-radius: 10px;
@@ -185,6 +186,8 @@ header {
     border: 1px solid #ccc;
     border-radius: 5px;
     color: #C0C0C0;
+    font-size: 1rem;
+    width: 100%;
 }
 
 .submit-btn {
@@ -228,6 +231,7 @@ header {
     background: linear-gradient(145deg, #02123d, #032b7a);
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    position: relative;
 }
 
 .credential-header {
@@ -249,7 +253,6 @@ header {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-    border-top: 1px solid #333;
 }
 
 .credential-card:hover {
@@ -326,4 +329,62 @@ header {
     display: inline-block;
     transform-origin: center;
     backface-visibility: hidden;
+}
+
+.eyeForAddCred {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    transition: transform 0.4s ease;
+    transform-origin: center;
+    backface-visibility: hidden;
+    position: absolute;
+    margin-top: 3px;
+    right: 46px;
+    background: #001f4d;
+}
+
+.credential-CRUD-header {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.editCredential,
+.deleteCredential {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.add-credential {
+    font-size: 1.2rem;
+}
+
+
+.toast {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #003399;
+    color: #C0C0C0;
+    padding: 14px 28px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    font-size: 1rem;
+    font-family: 'Ubuntu', sans-serif;
+    opacity: 0;
+    animation: fadeInOut 2.5s forwards;
+    z-index: 3000;
+    text-align: center;
+    white-space: nowrap;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, -20px); }
+    10% { opacity: 1; transform: translate(-50%, 0); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
 }

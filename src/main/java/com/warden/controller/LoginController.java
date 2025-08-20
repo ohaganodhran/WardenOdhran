@@ -24,13 +24,11 @@ public class LoginController {
 
     private final UserService userService;
     private final UserDao userDao;
-    private final CredentialService credentialService;
 
     @Autowired
-    public LoginController(UserService userService, UserDao userDao, CredentialService credentialService) {
+    public LoginController(UserService userService, UserDao userDao) {
         this.userService = userService;
         this.userDao = userDao;
-        this.credentialService = credentialService;
     }
 
     @GetMapping()
