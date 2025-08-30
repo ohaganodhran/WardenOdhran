@@ -2,7 +2,6 @@ package com.warden.controller;
 
 import com.warden.dao.UserDao;
 import com.warden.entity.User;
-import com.warden.service.CredentialService;
 import com.warden.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

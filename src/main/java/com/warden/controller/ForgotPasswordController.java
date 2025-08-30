@@ -2,7 +2,6 @@ package com.warden.controller;
 
 import com.warden.entity.PasswordResetToken;
 import com.warden.entity.User;
-import com.warden.service.EmailService;
 import com.warden.service.PasswordResetService;
 import com.warden.service.UserService;
 import jakarta.validation.Valid;
@@ -20,13 +19,11 @@ import java.util.Optional;
 public class ForgotPasswordController {
 
     private final UserService userService;
-    private final EmailService emailService;
     private final PasswordResetService passwordResetService;
 
     @Autowired
-    public ForgotPasswordController(UserService userService, EmailService emailService, PasswordResetService passwordResetService) {
+    public ForgotPasswordController(UserService userService, PasswordResetService passwordResetService) {
         this.userService = userService;
-        this.emailService = emailService;
         this.passwordResetService = passwordResetService;
     }
 
