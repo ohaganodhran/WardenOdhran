@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource("file:/var/WardenOdhran/local.properties")
+@PropertySource(value = "file:/var/WardenOdhran/local.properties", ignoreResourceNotFound = true)
 public class WardenOdhranApplication {
 
 	public static void main(String[] args) {
