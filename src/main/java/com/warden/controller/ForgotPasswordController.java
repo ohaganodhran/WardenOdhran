@@ -44,20 +44,11 @@ public class ForgotPasswordController {
 
         if(email == null || email.isEmpty()){
             redirectAttributes.addFlashAttribute("forgot", credentials);
-            redirectAttributes.addFlashAttribute("forgotPasswordError", "Please enter valid email");
-            return "redirect:/forgotPassword";
+            redirectAttributes.addFlashAttribute("forgotPasswordError", "Please enter valid email.");
+            return "redirect:/forgotpassword";
         }
 
-        Optional<User> userOpt = userService.findByEmail(email);
-
-        if(userOpt.isEmpty()) {
-            redirectAttributes.addFlashAttribute("forgot", credentials);
-            redirectAttributes.addFlashAttribute("forgotPasswordError", "Please enter valid email");
-            return "redirect:/forgotPassword";
-        }
-
-        User user = userOpt.get();
-        passwordResetService.sendResetEmail(user.getEmail());
+        userService.findByEmail(email).ifPresent(user -> passwordResetService.sendResetEmail(user.getEmail()));
 
         return "redirect:/forgotpassword/sent";
     }

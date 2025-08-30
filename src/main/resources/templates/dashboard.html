@@ -68,7 +68,7 @@
         <span class="close-btn" id="closeAddBtn">&times;</span>
         <h2>Add New Credential</h2>
 
-        <form th:action="@{/credential/add}" method="post" th:object="${newCredential}">
+        <form th:action="@{/credential/add}" method="post" th:object="${newCredential}" autocomplete="off">
             <div class="form-group">
                 <label for="siteName">Site Name</label>
                 <input type="text" id="siteName" th:field="*{siteName}" required />
@@ -131,7 +131,7 @@
         <span class="close-btn closeEditBtn">&times;</span>
         <h2>Edit Credential</h2>
 
-        <form th:action="@{/credential/edit}" method="post" th:object="${credentialToEdit}">
+        <form th:action="@{/credential/edit}" method="post" th:object="${credentialToEdit}" autocomplete="off">
             <div class="form-group">
                 <label for="siteNameToEdit">Site Name</label>
                 <input type="text" id="siteNameToEdit" class="siteNameToEdit" th:field="*{siteName}" required />

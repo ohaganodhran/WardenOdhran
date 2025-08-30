@@ -42,7 +42,7 @@ class TestForgotPasswordController {
         mockToken = new PasswordResetToken();
         mockToken.setUser(mockUser);
         mockToken.setUsed(false);
-        mockToken.setTokenHash("hashedToken");  // matches your entity
+        mockToken.setTokenHash("hashedToken");
         mockToken.setCreatedAt(LocalDateTime.now());
         mockToken.setExpiresAt(LocalDateTime.now().plusHours(1));
     }
@@ -71,7 +71,7 @@ class TestForgotPasswordController {
         mockMvc.perform(post("/forgotpassword")
                         .param("email", ""))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/forgotPassword"))
+                .andExpect(redirectedUrl("/forgotpassword"))
                 .andExpect(flash().attributeExists("forgotPasswordError"));
     }
 
@@ -82,8 +82,8 @@ class TestForgotPasswordController {
         mockMvc.perform(post("/forgotpassword")
                         .param("email", "wrong@example.com"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/forgotPassword"))
-                .andExpect(flash().attributeExists("forgotPasswordError"));
+                .andExpect(redirectedUrl("/forgotpassword/sent"))
+                .andExpect(flash().attributeCount(0));
     }
 
     @Test
