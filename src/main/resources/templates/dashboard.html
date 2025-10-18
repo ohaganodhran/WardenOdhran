@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/Assets/favicon.ico" />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    <script src="/js/dashboard.js" defer></script>
+</head>
+<body>
+<header>
+    <img class="logo" src="/Assets/logo.png" alt="Logo" />
+    <div class="header-actions">
+        <input type="text" id="search" placeholder="Search..." />
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" id="logout">Logout</button>
+        </form>
+    </div>
+    <h1 id="vault-title"><span th:text="${username}">User</span>'s Vault</h1>
+</header>
+
+<div id="wrapper">
+    <div id="body">
+        <div id="credentials-container">
+            <div th:if="${#lists.isEmpty(credentials)}" class="empty-message">
+                Nothing to see here...
+            </div>
+
+            <div th:each="cred : ${credentials}" class="credential-card" th:attr="data-id=${cred.id}">
+                <div class="credential-header">
+                    <span class="site-name" th:text="${cred.siteName}">Site Name</span>
+                    <span class="arrow">&#9666;</span>
+                </div>
+
+                <div class="credential-details">
+                    <div class="credential-CRUD-header">
+                        <img class="editCredential" src="/Assets/cogwheel.png"/>
+                        <img class="deleteCredential" src="/Assets/trash.png"/>
+                    </div>
+
+                    <div class="field">
+                        <label>Username:</label>
+                        <span class="value username" th:text="${cred.username}">username</span>
+                    </div>
+                    <div class="field password-field">
+                        <label>Password:</label>
+                        <div class="password-field">
+                            <input type="password" class="value password-input" readonly th:value="${cred.passwordHash}"/>
+                            <img class="eye-toggle" src="/Assets/eye.png"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Notes:</label>
+                        <span class="value notes" th:text="${cred.notes}">No notes.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                                                                <!--//////////////////////////////////////////////////////////-->
+                                                                <!--////////////////////ADD NEW CREDENTIAL////////////////////-->
+                                                                <!--//////////////////////////////////////////////////////////-->
+
+<div id="credentialModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn" id="closeAddBtn">&times;</span>
+        <h2>Add New Credential</h2>
+
+        <form th:action="@{/credential/add}" method="post" th:object="${newCredential}" autocomplete="off">
+            <div class="form-group">
+                <label for="siteName">Site Name</label>
+                <input type="text" id="siteName" th:field="*{siteName}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="siteUsername">Username</label>
+                <input type="text" id="siteUsername" th:field="*{username}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="sitePasswordHash">Password</label>
+                <div class="password-field-add">
+                    <input type="password" id="sitePasswordHash" class="value password-input-add" th:field="*{passwordHash}" required />
+                    <img class="eyeForAddCred" src="/Assets/eye.png"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea id="notes" th:field="*{notes}" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Add</button>
+        </form>
+    </div>
+</div>
+
+<button id="addCredentialBtn">+</button>
+
+
+                                                            <!--//////////////////////////////////////////////////////////-->
+                                                            <!--///////////////////DELETE A CREDENTIAL////////////////////-->
+                                                            <!--//////////////////////////////////////////////////////////-->
+
+<div id="deleteModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn close-delete-cred-btn">&times;</span>
+        <h2>Delete Credential</h2>
+        <form th:action="@{/credential/delete}" method="post"
+              style="display: flex; flex-direction: column;
+                gap: 0.5rem; text-align: center;">
+
+            <h3>Are you sure you want to delete the credential for <span class="deleteSiteName"></span>?</h3>
+
+            <input type="hidden" name="id" class="deleteCredentialId"/>
+
+            <button type="submit" class="submit-btn">Delete</button>
+        </form>
+    </div>
+</div>
+
+                                                            <!--//////////////////////////////////////////////////////////-->
+                                                            <!--/////////////////////EDIT A CREDENTIAL////////////////////-->
+                                                            <!--//////////////////////////////////////////////////////////-->
+
+
+<div id="credentialEditModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn closeEditBtn">&times;</span>
+        <h2>Edit Credential</h2>
+
+        <form th:action="@{/credential/edit}" method="post" th:object="${credentialToEdit}" autocomplete="off">
+            <div class="form-group">
+                <label for="siteNameToEdit">Site Name</label>
+                <input type="text" id="siteNameToEdit" class="siteNameToEdit" th:field="*{siteName}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="siteUsernameToEdit">Username</label>
+                <input type="text" id="siteUsernameToEdit" class="usernameToEdit" th:field="*{username}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="sitePasswordHashToEdit">Password</label>
+                <div class="password-field-edit">
+                    <input type="password" id="sitePasswordHashToEdit" class="value password-input-edit" th:field="*{passwordHash}" required />
+                    <img class="eyeForEditCred" src="/Assets/eye.png"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="notesToEdit">Notes</label>
+                <textarea id="notesToEdit" class="notesToEdit" th:field="*{notes}" rows="3"></textarea>
+            </div>
+
+            <input type="hidden" name="id" class="editCredentialId"/>
+
+            <button type="submit" class="submit-btn">Edit</button>
+        </form>
+    </div>
+</div>
+
+</body>
+
+<div th:if="${param.deletionSuccess != null}" class="toast">Credential Deleted Successfully</div>
+<div th:if="${param.editSuccess != null}" class="toast">Credential Edited Successfully</div>
+
+</html>

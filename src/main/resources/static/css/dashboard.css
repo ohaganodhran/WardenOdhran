@@ -1,0 +1,391 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+    background: darkblue;
+    color: #C0C0C0;
+    font-size: 18px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #030d2d;
+    height: 90px;
+    padding: 0 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    height: 90px;
+    width: 300px;
+    object-fit: contain;
+}
+
+#vault-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    color: #C0C0C0;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#search,
+#logout {
+    padding: 10px 15px;
+    border-radius: 7px;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background-color: #001f4d;
+    color: #C0C0C0;
+    height: 42px;
+}
+
+#search {
+    width: 200px;
+}
+
+#search::placeholder,
+#logout::placeholder {
+    color: #888;
+}
+
+#logout {
+    width: auto;
+    min-width: 100px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#logout:hover {
+    background-color: #003377;
+}
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 90px);
+    padding: 2rem;
+    background: linear-gradient(135deg, #04164d, #003399);
+}
+
+#body {
+    background: #050665;
+    width: 90%;
+    max-width: 650px;
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+#credentials-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#addCredentialBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: dodgerblue;
+    color: white;
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#addCredentialBtn:hover {
+    background-color: #007bff;
+}
+
+.empty-message {
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    color: #C0C0C0;
+    font-size: 1.5em;
+    font-style: italic;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    z-index: 2100;
+    background-color: #050665;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    color: #C0C0C0;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    background: #001f4d;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #C0C0C0;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #007bff;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+
+.arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.arrow.rotated {
+    transform: rotate(-90deg);
+}
+
+.credential-card {
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: linear-gradient(145deg, #02123d, #032b7a);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+.credential-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #C0C0C0;
+
+    border-bottom: 1px solid #1a1a1a;
+    border-radius: 16px 16px 0 0;
+}
+
+.credential-details {
+    padding: 1rem 1.5rem;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.credential-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.credential-card.open .credential-details {
+    display: flex;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+}
+
+.field label {
+    font-weight: bold;
+    color: #aaa;
+    align-self: flex-start;
+}
+
+.field .value {
+    color: #C0C0C0;
+    word-break: break-word;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.password-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.password-input {
+    background: transparent;
+    border: none;
+    color: #C0C0C0;
+    font-family: inherit;
+    font-size: 1rem;
+    flex-grow: 1;
+    width: 100%;
+    outline: none;
+    padding: 0;
+}
+
+.reveal-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #C0C0C0;
+    padding: 0 0.5rem;
+    transition: transform 0.2s ease;
+    white-space: nowrap;
+}
+
+.reveal-btn:hover {
+    transform: scale(1.2);
+}
+
+.eye-toggle {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin-left: 8px;
+    transition: transform 0.4s ease;
+    display: inline-block;
+    transform-origin: center;
+    backface-visibility: hidden;
+}
+
+.eyeForAddCred,
+.eyeForEditCred {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    transition: transform 0.4s ease;
+    transform-origin: center;
+    backface-visibility: hidden;
+    position: absolute;
+    margin-top: 3px;
+    right: 46px;
+    background: #001f4d;
+}
+
+.credential-CRUD-header {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.editCredential,
+.deleteCredential {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.add-credential {
+    font-size: 1.2rem;
+}
+
+
+.toast {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #003399;
+    color: #C0C0C0;
+    padding: 14px 28px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    font-size: 1rem;
+    font-family: 'Ubuntu', sans-serif;
+    opacity: 0;
+    animation: fadeInOut 2.5s forwards;
+    z-index: 3000;
+    text-align: center;
+    white-space: nowrap;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, -20px); }
+    10% { opacity: 1; transform: translate(-50%, 0); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
+}
