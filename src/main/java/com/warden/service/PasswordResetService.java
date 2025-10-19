@@ -5,6 +5,7 @@ import com.warden.entity.PasswordResetToken;
 import com.warden.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -26,6 +27,10 @@ public class PasswordResetService {
     @Autowired
     private EmailService emailService;
 
+    @Value("${domain.name}")
+    private String domainName;
+
+
     public void sendResetEmail(String email) {
         User user = userService.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
 
@@ -42,7 +47,7 @@ public class PasswordResetService {
 
         passwordResetTokenRepository.save(passwordResetToken);
 
-        String link = "http://localhost:8080/forgotpassword/reset?token=" + rawToken;
+        String link = "http://"+domainName+"/forgotpassword/reset?token=" + rawToken;
         emailService.sendEmail(user.getEmail(), "Reset your password", "Click the link to reset your password: " + link);
     }
 
