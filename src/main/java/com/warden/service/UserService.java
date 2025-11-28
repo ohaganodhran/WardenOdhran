@@ -1,10 +1,13 @@
 package com.warden.service;
 
 
+import com.warden.controller.LoginController;
 import com.warden.controller.UserDTO;
 import com.warden.dao.IUserDao;
 import com.warden.entity.User;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +22,8 @@ public class UserService {
 
     private final IUserDao userDao;
     private final PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
 
     @Autowired
     public UserService(IUserDao userDao) {
@@ -29,7 +34,7 @@ public class UserService {
     public void create(UserDTO userDTO) {
         User user = mapToEntity(userDTO);
         userDao.create(user);
-        log.info("User created: {}", user.getUsername());
+        logger.info("New user created under name '{}'", user.getUsername());
     }
 
     public Optional<User> findByUsername(String username) {
@@ -66,5 +71,6 @@ public class UserService {
         String hashed = passwordEncoder.encode(newPassword);
         user.setPasswordHash(hashed);
         userDao.update(user);
+        logger.info("Password Updated for User '{}'", user.getUsername());
     }
 }

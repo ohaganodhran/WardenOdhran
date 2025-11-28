@@ -5,6 +5,8 @@ import com.warden.dao.CredentialDao;
 import com.warden.entity.Credential;
 import com.warden.util.EncryptionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class CredentialService {
 
     private final CredentialDao credentialDao;
     private final EncryptionUtil encryptionUtil;
+    private static final Logger logger = LoggerFactory.getLogger(CredentialService.class);
+
 
 
     @Autowired
@@ -37,7 +41,7 @@ public class CredentialService {
     public void saveCredential(CredentialDTO credentialDTO) {
         Credential credential = mapToEntity(credentialDTO);
         credentialDao.save(credential);
-        log.info("Credential created under user {}", credential.getUser().getUsername());
+        logger.info("New credential created under user '{}'", credential.getUser().getUsername());
     }
 
     public void updateCredential(Long id, CredentialDTO newCredentialDTO) {
@@ -49,12 +53,12 @@ public class CredentialService {
         existingCredential.setNotes(newCredentialDTO.getNotes());
 
         credentialDao.save(existingCredential);
-        log.info("Credential updated under user {}", existingCredential.getUser().getUsername());
+        logger.info("Credential edited under user '{}'", existingCredential.getUser().getUsername());
 
     }
 
     public void deleteCredential(Long id) {
-        credentialDao.findById(id).ifPresent(credential -> log.info("Credential deleted under user {}", credential.getUser().getUsername()));
+        credentialDao.findById(id).ifPresent(credential -> logger.info("Credential '{}' deleted under user '{}'", credential.getSiteName() ,credential.getUser().getUsername()));
         credentialDao.deleteById(id);
     }
 

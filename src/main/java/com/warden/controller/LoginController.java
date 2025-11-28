@@ -6,6 +6,8 @@ import com.warden.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ public class LoginController {
 
     private final UserService userService;
     private final UserDao userDao;
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     public LoginController(UserService userService, UserDao userDao) {
@@ -80,10 +83,16 @@ public class LoginController {
             redirectAttributes.addFlashAttribute("loginError", "Invalid username or password");
             redirectAttributes.addFlashAttribute("creds", new Identity());
             redirectAttributes.addFlashAttribute("user", new UserDTO());
+
+            logger.info("Attempted login for user '{}'", creds.getUsername());
+
             return "redirect:/";
         } else {
             session.setAttribute("user", user);
             userDao.updateLastLogin(user.getEmail());
+
+            logger.info("User successfully logged in '{}'", creds.getUsername());
+
             return "redirect:/dashboard";
         }
     }
