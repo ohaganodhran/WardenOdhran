@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -31,6 +32,7 @@ public class CredentialService {
     public List<Credential> findByUsername(String username) {
         List<Credential> credentials = credentialDao.findByUserUsername(username);
         credentials.forEach(credential -> credential.setPasswordHash(encryptionUtil.decrypt(credential.getPasswordHash())));
+        credentials.sort(Comparator.comparing(c -> c.getSiteName().toLowerCase()));
         return credentials;
     }
 
