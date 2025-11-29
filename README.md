@@ -58,7 +58,7 @@ java -jar build/libs/wardenodhran.war
 http://localhost:8080
 ```
 
-## 🌐 Production
+## Production
 
 WardenOdhran is also running on a production server: [http://wardenodhran.com](http://wardenodhran.com)
 
