@@ -76,6 +76,7 @@ public class ForgotPasswordController {
         }
 
         if(result.hasErrors()) {
+            model.addAttribute("showSignup", true);
             model.addAttribute("forgot", forgotDTO);
             model.addAttribute("token", rawToken);
             return "resetPassword";
