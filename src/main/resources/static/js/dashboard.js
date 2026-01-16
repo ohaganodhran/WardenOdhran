@@ -12,7 +12,6 @@ function toggleCard(headerElement) {
         eyeToggle.src = '/Assets/eye.png';
         eyeToggle.style.transform = 'scale(1) rotateY(0deg)';
     }
-
 }
 
 function toggleModal(modal) {

@@ -28,6 +28,10 @@
             <p class="error-message" th:if="${loginError}" th:text="${loginError}"></p>
             <input type="text" th:field="*{username}" placeholder="Username" required>
             <input type="password" id="password" th:field="*{password}" placeholder="Password" required>
+            <img id="loginEye"
+                 src="/Assets/eye.png"
+                 class="password-eye"
+                 alt="Toggle password visibility">
             <input type="submit" value="Login">
         </form>
 
@@ -53,16 +57,26 @@
 
             <input type="password"
                    th:field="*{password}"
+                   id="passwordSignup"
                    th:classappend="${#fields.hasErrors('password')} ? 'error' : ''"
                    placeholder="Password" required>
+            <img id="signupEye"
+                 src="/Assets/eye.png"
+                 class="password-eye"
+                 alt="Toggle password visibility">
             <p class="error-message"
                th:if="${user != null} and ${#fields.hasErrors('password')}"
                th:errors="*{password}"></p>
 
             <input type="password"
                    th:field="*{confirmPassword}"
+                   id="confirmPasswordSignup"
                    th:classappend="${#fields.hasErrors('confirmPassword')} ? 'error' : ''"
                    placeholder="Confirm Password" required>
+            <img id="signupConfirmEye"
+                 src="/Assets/eye.png"
+                 class="password-eye"
+                 alt="Toggle password visibility">
             <p class="error-message"
                th:if="${user != null} and ${#fields.hasErrors('confirmPassword')}"
                th:errors="*{confirmPassword}"></p>

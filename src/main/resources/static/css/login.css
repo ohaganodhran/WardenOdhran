@@ -142,3 +142,50 @@ input.error {
     80% { opacity: 1; }
     100% { opacity: 0; transform: translate(-50%, -20px); }
 }
+
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 44px;
+}
+
+#loginEye {
+    position: absolute;
+    top: 61.3%;
+    right: 35%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 2;
+    user-select: none;
+}
+
+#signupEye {
+    position: absolute;
+    top: 61.3%;
+    right: 35%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 2;
+    user-select: none;
+}
+
+#signupConfirmEye {
+    position: absolute;
+    top: 69.6%;
+    right: 35%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 2;
+    user-select: none;
+}
