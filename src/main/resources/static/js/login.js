@@ -25,14 +25,14 @@ document.querySelectorAll(".password-eye").forEach(eye => {
 
 loginTab.addEventListener("click", () => {
     loginTab.classList.add("active");
-    forgotPasswordButton.style.visibility = "visible"; // Changed from display="unset"
+    forgotPasswordButton.style.visibility = "visible";
     signupTab.classList.remove("active");
     loginForm.classList.remove("hidden");
     signupForm.classList.add("hidden");
 });
 signupTab.addEventListener("click", () => {
     signupTab.classList.add("active");
-    forgotPasswordButton.style.visibility = "hidden"; // Changed from display="none"
+    forgotPasswordButton.style.visibility = "hidden";
     loginTab.classList.remove("active");
     signupForm.classList.remove("hidden");
     loginForm.classList.add("hidden");

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forgot Password</title>
+    <link rel="icon" type="image/x-icon" href="/Assets/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/editUser.css}">
+    <script th:src="@{/js/editUser.js}"></script>
+</head>
+<body>
+<header>
+    <img class="logo" src="/Assets/logo.png" alt="Logo"/>
+    <div class="header-actions">
+        <a th:href="@{/dashboard}" class="buttonLink" id="back-button">Back to Main Menu</a>
+    </div>
+</header>
+<div id="wrapper">
+    <div id="body">
+        <h1><span>Edit User</span></h1>
+        <form id="editUserForm" th:object="${userToEdit}" th:action="@{/editUser/edit}" method="post" novalidate autocomplete="off">
+            <div class="form-group">
+                <label for="usernameToEdit">Username</label>
+
+                <input type="text" id="usernameToEdit" class="usernameToEdit"
+                       th:field="*{username}"
+                       th:classappend="${#fields.hasErrors('username')} ? 'error' : ''"
+                       required/>
+
+                <p class="error-message"
+                   th:if="${#fields.hasErrors('username')}"
+                   th:errors="*{username}">
+
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="emailToEdit">Email</label>
+                <input type="email" id="emailToEdit" class="emailToEdit"
+                          th:field="*{email}"
+                       th:classappend="${#fields.hasErrors('email')} ? 'error' : ''"
+                       required/>
+
+                <p class="error-message"
+                   th:if="${#fields.hasErrors('email')}"
+                   th:errors="*{email}">
+            </div>
+
+            <div class="form-group">
+                <label for="created">Date Created</label>
+                <input type="text" id="created" class="createdToEdit" readonly
+                       th:value="${userToEdit.created != null ? #dates.format(userToEdit.created, 'dd-MM-yyyy HH:mm') : 'Never'}"/>
+            </div>
+
+            <div class="form-group">
+                <label for="lastModified">Date Last Modified</label>
+                <input type="text" id="lastModified" class="lastModifiedToEdit" readonly
+                       th:value="${userToEdit.modified != null ? #dates.format(userToEdit.modified, 'dd-MM-yyyy HH:mm') : 'Never'}"/>
+            </div>
+
+<!--        TODO: password reset doesnt work at all even in db, need to get it up using same method as modified-->
+            <div class="form-group">
+                <label for="lastPasswordReset">Date Password Reset</label>
+                <input type="text" id="lastPasswordReset" class="lastPasswordResetToEdit" readonly
+                       th:value="${userToEdit.lastPasswordReset != null ? #dates.format(userToEdit.lastPasswordReset, 'dd-MM-yyyy HH:mm') : 'Never'}"/>
+            </div>
+
+            <button type="submit" class="submit-btn">Save</button>
+        </form>
+    </div>
+</div>
+</body>
+<div th:if="${param.editSuccess != null}" class="toast">User Edited Successfully</div>
+</html>

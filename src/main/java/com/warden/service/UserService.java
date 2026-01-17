@@ -1,7 +1,6 @@
 package com.warden.service;
 
 
-import com.warden.controller.LoginController;
 import com.warden.controller.UserDTO;
 import com.warden.dao.IUserDao;
 import com.warden.entity.User;
@@ -72,5 +71,34 @@ public class UserService {
         user.setPasswordHash(hashed);
         userDao.update(user);
         logger.info("Password Updated for User '{}'", user.getUsername());
+    }
+
+    //fail only if its in the db and belongs to someone else
+    public boolean doesUsernameExist(Long id, String username) {
+        User user = userDao.findByUsername(username).orElse(new User());
+        if(user.getUsername() != null) {
+            return user.getId().equals(id);
+        }
+        return true;
+    }
+
+    //fail only if its in the db and belongs to someone else
+    public boolean doesEmailExist(Long id, String email) {
+        User user = findByEmail(email).orElse(new User());
+        if(user.getEmail() != null) {
+            return user.getId().equals(id);
+        }
+        return true;
+    }
+
+    public void update(Long id, UserDTO userDTO) {
+        User existingUser = Optional.ofNullable(userDao.findById(id))
+                .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+
+        existingUser.setUsername(userDTO.getUsername());
+        existingUser.setEmail(userDTO.getEmail());
+
+        userDao.update(existingUser);
+        logger.info("User '{}' updated", existingUser.getUsername());
     }
 }

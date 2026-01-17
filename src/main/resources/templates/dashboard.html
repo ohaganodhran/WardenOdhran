@@ -12,6 +12,9 @@
     <img class="logo" src="/Assets/logo.png" alt="Logo" />
     <div class="header-actions">
         <input type="text" id="search" placeholder="Search..." />
+        <a th:href="@{/editUser}">
+            <img class="editUserIcon" src="/Assets/cogwheelWhite.png" alt="edit user image"/>
+        </a>
         <form th:action="@{/logout}" method="post">
             <button type="submit" id="logout">Logout</button>
         </form>

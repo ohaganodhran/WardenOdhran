@@ -7,10 +7,12 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class UserDTO {
-    private int id;
+    private long id;
 
     @NotNull(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
@@ -29,6 +31,12 @@ public class UserDTO {
 
     @NotNull(message = "Username is required")
     private String username;
+
+    private Date modified;
+
+    private Date created;
+
+    private Date lastPasswordReset;
 
     public boolean passwordsMatch() {
         return password != null && password.equals(confirmPassword);

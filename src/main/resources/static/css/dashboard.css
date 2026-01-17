@@ -359,6 +359,12 @@ header {
     height: 30px;
 }
 
+.editUserIcon {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
 .add-credential {
     font-size: 1.2rem;
 }
