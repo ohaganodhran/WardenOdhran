@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete User</title>
+    <link rel="icon" type="image/x-icon" href="/Assets/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/deleteUser.css}">
+    <script th:src="@{/js/deleteUser.js}" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+<header>
+    <img class="logo" src="/Assets/logo.png" alt="Logo"/>
+    <div class="header-actions">
+        <a th:href="@{/dashboard}" class="buttonLink" id="back-button">Back to Dashboard</a>
+    </div>
+</header>
+<div id="wrapper">
+    <div id="body">
+        <h1><span>Delete User</span></h1>
+        <p style="color: darkred; font-weight: bold">Warning! Deletion of an account means all associated credentials will be deleted.</p>
+        <p style="font-weight: bold">Please confirm password to continue.</p>
+
+        <form id="deleteUserForm" th:object="${user}" th:action="@{/deleteUser}" th:method="post" novalidate autocomplete="off">
+            <div class="form-group password-field">
+                <input type="password"
+                       th:field="*{password}"
+                       id="passwordInput"
+                       th:classappend="${#fields.hasAnyErrors() and #fields.hasErrors('password')} ? 'error' : ''"
+                       placeholder="Password" required>
+                <img id="signupEye"
+                     src="/Assets/eye.png"
+                     class="password-eye"
+                     alt="Toggle password visibility">
+            </div>
+
+            <p class="error-message"
+               th:if="${#fields.hasAnyErrors() and #fields.hasErrors('password')}"
+               th:errors="*{password}">
+            </p>
+
+            <div class="form-group password-field">
+                <input type="password"
+                       th:field="*{confirmPassword}"
+                       id="confirmPasswordInput"
+                       th:classappend="${#fields.hasAnyErrors() and #fields.hasErrors('confirmPassword')} ? 'error' : ''"                       placeholder="Confirm Password" required>
+                <img id="signupConfirmEye"
+                     src="/Assets/eye.png"
+                     class="password-eye"
+                     alt="Toggle password visibility">
+            </div>
+
+            <p class="error-message"
+               th:if="${#fields.hasAnyErrors() and #fields.hasErrors('confirmPassword')}"
+               th:errors="*{confirmPassword}">
+            </p>
+
+            <button type="submit" id="preDeleteBtn" class="submit-btn">Delete Account</button>
+        </form>
+
+        <div id="confirmationModal" class="modal-overlay"
+             th:style="${showConfirmModal} ? 'visibility:visible' : 'visibility:hidden'">
+            <div class="modal-content">
+                <div class="modal-icon">
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+                <h3>Are you absolutely sure?</h3>
+                <p>This will delete your account forever. You cannot undo this.</p>
+
+                <div class="modal-actions">
+
+                    <form id="deleteUserConfirmationForm" th:action="@{/deleteUser/confirm}" th:method="delete">
+                        <button type="submit" id="confirmDeletion" class="btn-danger">Yes, Delete Everything</button>
+                    </form>
+
+                    <button type="button" id="cancelDeletion" class="btn-secondary">Cancel</button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

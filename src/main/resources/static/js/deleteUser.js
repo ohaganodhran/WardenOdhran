@@ -20,3 +20,12 @@ document.addEventListener('click', (event) => {
         toggleEye(eye);
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('confirmationModal');
+    const cancelBtn = document.getElementById('cancelDeletion');
+
+    cancelBtn.addEventListener('click', () => {
+        modal.style.visibility = 'hidden';
+    });
+});

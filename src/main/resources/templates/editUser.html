@@ -2,22 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Forgot Password</title>
+    <title>Edit User</title>
     <link rel="icon" type="image/x-icon" href="/Assets/favicon.ico">
     <link rel="stylesheet" th:href="@{/css/editUser.css}">
-    <script th:src="@{/js/editUser.js}"></script>
 </head>
 <body>
 <header>
     <img class="logo" src="/Assets/logo.png" alt="Logo"/>
     <div class="header-actions">
-        <a th:href="@{/dashboard}" class="buttonLink" id="back-button">Back to Main Menu</a>
+        <a th:href="@{/dashboard}" class="buttonLink" id="back-button">Back to Dashboard</a>
     </div>
 </header>
 <div id="wrapper">
     <div id="body">
         <h1><span>Edit User</span></h1>
-        <form id="editUserForm" th:object="${userToEdit}" th:action="@{/editUser/edit}" method="post" novalidate autocomplete="off">
+        <form id="editUserForm" th:object="${userToEdit}" th:action="@{/editUser}" th:method="put" novalidate autocomplete="off">
             <div class="form-group">
                 <label for="usernameToEdit">Username</label>
 
@@ -57,7 +56,7 @@
                        th:value="${userToEdit.modified != null ? #dates.format(userToEdit.modified, 'dd-MM-yyyy HH:mm') : 'Never'}"/>
             </div>
 
-<!--        TODO: password reset doesnt work at all even in db, need to get it up using same method as modified-->
+<!--        TODO: password reset date doesnt work at all even in db, need to get it up using same method as modified-->
             <div class="form-group">
                 <label for="lastPasswordReset">Date Password Reset</label>
                 <input type="text" id="lastPasswordReset" class="lastPasswordResetToEdit" readonly
@@ -65,6 +64,7 @@
             </div>
 
             <button type="submit" class="submit-btn">Save</button>
+            <a th:href="@{/deleteUser}" class="buttonLink" id="to-delete-page">Delete User</a>
         </form>
     </div>
 </div>

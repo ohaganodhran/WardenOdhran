@@ -24,9 +24,9 @@
             <button id="signupTab" class="tab">Sign Up</button>
         </div>
 
-        <form id="loginForm" class="form active" th:object="${creds}" th:action="@{/login}" method="post" autocomplete="off">
+        <form id="loginForm" class="form active" th:object="${creds}" th:action="@{/login}" th:method="post" autocomplete="off">
             <p class="error-message" th:if="${loginError}" th:text="${loginError}"></p>
-            <input type="text" th:field="*{username}" placeholder="Username" required>
+            <input type="text" th:field="*{username}" placeholder="Username" required autofocus>
 
             <div class="password-field">
                 <input type="password" id="password" th:field="*{password}" placeholder="Password" required>
@@ -40,7 +40,7 @@
 
         <form id="signupForm" class="form hidden"
               th:object="${user}"
-              th:action="@{/signup}" method="post" novalidate autocomplete="off">
+              th:action="@{/signup}" th:method="post" novalidate autocomplete="off">
 
             <input type="text"
                    th:field="*{username}"
@@ -100,4 +100,5 @@
 </body>
 
 <div id="toast" th:if="${signupSuccess}" class="toast">User Created Successfully!</div>
+<div th:if="${deleteSuccess}" class="toast">Account Deleted Successfully</div>
 </html>

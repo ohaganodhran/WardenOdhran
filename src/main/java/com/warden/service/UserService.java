@@ -101,4 +101,15 @@ public class UserService {
         userDao.update(existingUser);
         logger.info("User '{}' updated", existingUser.getUsername());
     }
+
+    public void delete(Long id) {
+        User user = userDao.findById(id);
+        logger.info("User '{}' deleted", user.getUsername());
+
+        try {
+            userDao.delete(id);
+        } catch (Exception e) {
+            logger.error("Error deleting user: {}", e.getMessage());
+        }
+    }
 }
