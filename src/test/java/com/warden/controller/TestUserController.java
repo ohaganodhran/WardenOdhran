@@ -177,7 +177,7 @@ class TestUserController {
 
         mockMvc.perform(delete("/deleteUser/confirm").session(session))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/?deleted=true"));
+                .andExpect(redirectedUrl("/"));
 
         verify(userService).delete(1L);
     }
